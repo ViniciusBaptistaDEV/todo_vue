@@ -1,6 +1,6 @@
 <script setup>
 
-const props = defineProps(['tarefas']);
+const props = defineProps(['tarefas', 'filtroIf']);
 
 </script>
 
@@ -16,8 +16,7 @@ const props = defineProps(['tarefas']);
         </li>
     </ul>
     <h5 v-else class="mt-5">
-        Você não tem nenhuma tarefa pendente. <br>
-        Aproveite para descansar!
+        {{ props.filtroIf }}
     </h5>
 
 </template>

@@ -9,20 +9,7 @@ import ListaDeTarefas from './components/ListaDeTarefas.vue';
 const estado = reactive({
   filtro: 'todas',
   tarefaTemporaria: '',
-  tarefas: [
-    {
-      titulo: 'Estudar ES6',
-      finalizada: false,
-    },
-    {
-      titulo: 'Estudar SASS',
-      finalizada: false,
-    },
-    {
-      titulo: 'Ir para a academia',
-      finalizada: true,
-    }
-  ]
+  tarefas: []
 })
 
 const getTarefasPendentes = () => {
@@ -57,6 +44,16 @@ const cadastraTarefa = () => {
   estado.tarefaTemporaria = '';
 }
 
+function getMensagemVazia() {
+  if (estado.filtro === 'todas') {
+    return "Você não tem nenhuma tarefa cadastrada.";
+  } else if (estado.filtro === 'pendentes') {
+    return "Você não tem nenhuma tarefa pendente.";
+  } else if (estado.filtro === 'finalizadas') {
+    return "Você não tem nenhuma tarefa finalizada ainda.";
+  }
+}
+
 </script>
 
 <template>
@@ -65,7 +62,7 @@ const cadastraTarefa = () => {
 
     <Cabecalho :tarefas-pendentes="getTarefasPendentes().length" />
     <Formulario :trocar-filtro="evento => estado.filtro = evento.target.value" :tarefa-temporaria="estado.tarefaTemporaria" :edita-tarefa-temporaria="evento => estado.tarefaTemporaria = evento.target.value" :cadastra-tarefa="cadastraTarefa" />
-    <ListaDeTarefas :tarefas="getTarefasFiltradas()" />
+    <ListaDeTarefas :tarefas="getTarefasFiltradas()" :filtro-if="getMensagemVazia()"  />
 
   </div>
 
